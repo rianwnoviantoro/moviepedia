@@ -25,7 +25,7 @@ class MoviesController extends Controller
       return [$genre['id'] => $genre['name']];
     });
 
-    // dump($popularMovies);
+    dump($popularMovies);
 
     return view('index',[
       'popularMovies'     => $popularMovies,
