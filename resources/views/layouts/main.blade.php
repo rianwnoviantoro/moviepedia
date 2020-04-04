@@ -8,6 +8,7 @@
   <title>Moviepedia: @yield('title')</title>
 
   <link rel="stylesheet" href="/css/main.css">
+  <livewire:styles>
 </head>
 
 <body class="font-sans bg-gray-900 text-white">
@@ -119,18 +120,7 @@
         </li>
       </ul>
       <div class="flex flex-col md:flex-row items-center">
-        <div class="relative mt-3 md:mt-0">
-          <input type="text"
-            class="text-sm bg-gray-800 rounded-full w-64 px-4 pl-8 py-1 focus:outline-none focus:shadow-outline"
-            placeholder="Search">
-          <div class="absolute top-0">
-            <svg class="fill-current w-4 text-gray-500 mt-2 ml-2" viewBox="0 0 512.39 512.39"
-              xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M211.2 422C94.85 422 .2 327.346.2 211S94.854 0 211.2 0s211 94.654 211 211-94.654 211-211 211zm0-382c-94.29 0-171 76.71-171 171s76.71 171 171 171 171-76.71 171-171-76.71-171-171-171zm295.14 466.53c7.81-7.811 7.81-20.475 0-28.285l-89.5-89.5c-7.811-7.811-20.475-7.811-28.285 0s-7.81 20.475 0 28.285l89.5 89.5c3.905 3.905 9.024 5.857 14.143 5.857s10.236-1.952 14.142-5.857z" />
-              </svg>
-          </div>
-        </div>
+        <livewire:search-dropdown>
         <div class="md:ml-4 mt-3 md:mt-0">
           <a href="#">
             <img src="/img/avatar.jpg" alt="avatar" class="rounded-full w-8 h-8">
@@ -142,6 +132,7 @@
   {{-- Navigation End --}}
 
   @yield('content')
+  <livewire:scripts>
 </body>
 
 </html>
