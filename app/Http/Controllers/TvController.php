@@ -25,7 +25,7 @@ class TvController extends Controller
       return [$genre['id'] => $genre['name']];
     });
 
-    dump($popularTv);
+    // dump($popularTv);
 
     return view('tvs.index',[
       'popularTv' => $popularTv,

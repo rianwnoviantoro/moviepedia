@@ -4,7 +4,7 @@
   {{-- Movie Info Start --}}
   <div class="movie-info border-b border-gray-800">
     <div class="container mx-auto px-4 py-16 flex flex-col md:flex-row">
-      <img src="https://image.tmdb.org/t/p/w500{{ $movie['poster_path'] }}" alt="{{ $movie['title'] }}" class="w-96">
+      <img src="https://image.tmdb.org/t/p/w500{{ $movie['poster_path'] }}" alt="poster_{{ $movie['title'] }}" class="w-96">
       <div class="md:ml-24">
         <h2 class="text-4xl font-semibold">
           {{ $movie['title'] }}
@@ -37,14 +37,30 @@
             @endforeach
           </div>
         </div>
-        @if(count($movie['videos']['results']) > 0)
-          <div class="mt-12">
-            <a href="https://youtube.com/watch?v={{ $movie['videos']['results'][0]['key'] }}" target="_blank" class="flex inline-flex items-center bg-orange-500 text-gray-900 rounded font-semibold px-5 py-4 hover:bg-orange-600 transition ease-in-out duration-150">
-              <svg class="w-6 fill-current" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M256 0C115.2 0 0 115.2 0 256s115.2 256 256 256 256-115.2 256-256S396.8 0 256 0zm115.2 281.6l-148.48 97.28c-17.92 12.8-43.52-2.56-43.52-25.6V158.72c0-23.04 25.6-38.4 43.52-25.6L371.2 230.4c17.92 12.8 17.92 38.4 0 51.2z"/></svg>
-              <span class="ml-2">Play Trailer</span>
-            </a>
+        <div x-data="{ isOpen : false }">
+          @if(count($movie['videos']['results']) > 0)
+            <div class="mt-12">
+              <button @click="isOpen = true" class="flex inline-flex items-center bg-orange-500 text-gray-900 rounded font-semibold px-5 py-4 hover:bg-orange-600 transition ease-in-out duration-150">
+                <svg class="w-6 fill-current" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M256 0C115.2 0 0 115.2 0 256s115.2 256 256 256 256-115.2 256-256S396.8 0 256 0zm115.2 281.6l-148.48 97.28c-17.92 12.8-43.52-2.56-43.52-25.6V158.72c0-23.04 25.6-38.4 43.52-25.6L371.2 230.4c17.92 12.8 17.92 38.4 0 51.2z"/></svg>
+                <span class="ml-2">Play Trailer</span>
+              </button>
+            </div>
+          @endif
+          <div style="background-color: rgba(0, 0, 0, .6)" class="fixed top-0 left-0 w-full h-full flex items-center shadow-lg overflow-y-auto" x-show.transition.opacity="isOpen">
+            <div class="container mx-auto lg:px-32 rounded-lg overflow-y-auto">
+              <div class="bg-gray-900 rounded">
+                <div class="flex justify-end pr-4 pt-2">
+                  <button @click="isOpen = false" class="text-3xl leading-none hover:text-gray-300">&times;</button>
+                </div>
+                <div class="modal-body px-2 py-2">
+                  <div class="responsive-container overflow-hidden relative" style="padding-top: 56.25%">
+                    <iframe class="responsive-iframe absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/{{ $movie['videos']['results'][0]['key'] }}" style="border:0;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        @endif
+        </div>
       </div>
     </div>
   </div>
@@ -76,19 +92,34 @@
   {{-- Movie Cast End --}}
 
   {{-- Images Cover Start --}}
-  <div class="images-cover border-b border-gray-800">
+  <div class="images-cover border-b border-gray-800" x-data="{ isOpen: false, image: '' }">
     <div class="container mx-auto px-4 py-16">
       <h2 class="text-4xl font-semibold">Images</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
         @foreach($movie['images']['backdrops'] as $backdrops)
           @if($loop->index < 9)
           <div class="mt-8">
-            <a href="#">
+            <a href="#" @click.prevent="
+              isOpen = true
+              image='https://image.tmdb.org/t/p/original{{ $backdrops['file_path'] }}'
+            ">
               <img src="https://image.tmdb.org/t/p/w500{{ $backdrops['file_path'] }}" alt="{{ $backdrops['file_path'] }}" class="hover:opacity-50 transition ease-in-out duration-150">
             </a>
           </div>
           @endif
         @endforeach
+      </div>
+      <div style="background-color: rgba(0, 0, 0, .6)" class="fixed top-0 left-0 w-full h-full flex items-center shadow-lg overflow-y-auto" x-show.transition.opacity="isOpen" @click="isOpen = false">
+        <div class="container mx-auto lg:px-32 rounded-lg overflow-y-auto">
+          <div class="bg-gray-900 rounded">
+            <div class="flex justify-end pr-4 pt-2">
+              <button @click="isOpen = false" @keydown.escape.window="isOpen = false" class="text-3xl leading-none hover:text-gray-300">&times; </button>
+            </div>
+            <div class="modal-body px-1 py-1">
+              <img :src="image" alt="poster_{{ $backdrops['file_path'] }}">
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
