@@ -1,5 +1,7 @@
 @extends('layouts.main')
 
+@section('title', Request::segment(1) )
+
 @section('content')
   <div class="container mx-auto px-4 pt-16">
     {{-- Popular Movies Start --}}

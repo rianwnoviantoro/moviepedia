@@ -27,7 +27,7 @@ class MoviesController extends Controller
 
     // dump($popularMovies);
 
-    return view('index',[
+    return view('movies/index',[
       'popularMovies'     => $popularMovies,
       'nowPlayingMovies'  => $nowPlayingMovies,
       'genreMovie'        => $genres,
@@ -52,7 +52,7 @@ class MoviesController extends Controller
 
     // dump($movie);
 
-    return view('show',[
+    return view('movies/show',[
       'movie' => $movie]);
   }
 

@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Moviepedia</title>
+  <title>Moviepedia: @yield('title')</title>
 
   <link rel="stylesheet" href="/css/main.css">
 </head>
@@ -112,7 +112,7 @@
           <a href="{{ route('movies.index') }}" class="hover:text-gray-500">Movies</a>
         </li>
         <li class="md:ml-6 mt-3 md:mt-0">
-          <a href="{{ route('movies.index') }}" class="hover:text-gray-500">TV Shows</a>
+          <a href="{{ route('tv.index') }}" class="hover:text-gray-500">TV Shows</a>
         </li>
         <li class="md:ml-6 mt-3 md:mt-0">
           <a href="{{ route('movies.index') }}" class="hover:text-gray-500">Actors</a>
