@@ -12,9 +12,9 @@ class ViewMoviesTest extends TestCase
   public function the_main_page_shows_correct_info()
   {
     Http::fake([
-      'https://api.themoviedb.org/3/movie/popular'      => $this->fakePopularMovies(),
-      'https://api.themoviedb.org/3/movie/now_playing'  => $this->fakeNowPlayingMovies(),
-      'https://api.themoviedb.org/3/genre/movie/list'   => $this->fakeGenres(),
+      config('services.tmdb.url_api').'movie/popular'      => $this->fakePopularMovies(),
+      config('services.tmdb.url_api').'movie/now_playing'  => $this->fakeNowPlayingMovies(),
+      config('services.tmdb.url_api').'genre/movie/list'   => $this->fakeGenres(),
     ]);
 
     $response = $this->get(route('movies.index'));
@@ -30,7 +30,7 @@ class ViewMoviesTest extends TestCase
   public function the_movie_page_shows_the_correct_info()
   {
     Http::fake([
-      'https://api.themoviedb.org/3/movie/*' => $this->fakeSingleMovie(),
+      config('services.tmdb.url_api').'movie/*' => $this->fakeSingleMovie(),
     ]);
 
     $response = $this->get(route('movies.show', 12345));
@@ -44,7 +44,7 @@ class ViewMoviesTest extends TestCase
   public function the_search_dropdown_works_correctly()
     {
       Http::fake([
-        'https://api.themoviedb.org/3/search/movie?query=jumanji' => $this->fakeSearchMovies(),
+        config('services.tmdb.url_api').'search/movie?query=jumanji' => $this->fakeSearchMovies(),
       ]);
 
       Livewire::test('search-dropdown')
